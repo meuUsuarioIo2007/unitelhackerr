@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(banner.gif);
+    background-repeat: ;
+    text-align: center;
+}
+
+.container {
+    background-color: green;
+    padding: 70px;
+    margin: 20px auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.operadoras {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.operadora {
+    padding: 10px 20px;
+    background-color: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#unitel {
+    background-color: #ff6600;
+    color: #fff;
+}
+
+#africell {
+    background-color: #006600;
+    color: #fff;
+}
+
+#bazza {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+#movicel {
+    background-color: #0066cc;
+    color: #fff;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: black;
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <title>Gerador de Códigos de Recarga</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(banner.gif);
+    background-repeat: ;
+    text-align: center;
+}
+
+.container {
+    background-color: green;
+    padding: 70px;
+    margin: 20px auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.operadoras {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.operadora {
+    padding: 10px 20px;
+    background-color: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#unitel {
+    background-color: #ff6600;
+    color: #fff;
+}
+
+#africell {
+    background-color: #006600;
+    color: #fff;
+}
+
+#bazza {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+#movicel {
+    background-color: #0066cc;
+    color: #fff;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: black;
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>Gerador de Códigos de Recarga</h1>
+        <button id="gerarCodigo">Gerar Código</button>
+        <p id="codigoGerado"></p>
+        <audio id="clickSound">
+            <source src="click-sound.mp3" type="audio/mpeg">
+        </audio>
+        <div class="operadoras">
+            <div class="operadora" id="unitel" data-operadora="unitel">Unitel</div>
+            <div class="operadora" id="africell" data-operadora="africell">Africell</div>
+            <div class="operadora" id="bazza" data-operadora="bazza">Bazza</div>
+            <div class="operadora" id="movicel" data-operadora="movicel">Movicel</div>
+        </div>
+    </div>
+    <script src="script.js">
+    		document.addEventListener("DOMContentLoaded", function () {
+    const gerarCodigoBtn = document.getElementById("gerarCodigo");
+    const codigoGerado = document.getElementById("codigoGerado");
+    const operadoras = document.querySelectorAll(".operadora");
+    let operadoraSelecionada = null;
+    const clickSound = document.getElementById("clickSound");
+
+    operadoras.forEach(function (operadora) {
+        operadora.addEventListener("click", function () {
+            const corFundo = window.getComputedStyle(operadora).backgroundColor;
+            gerarCodigoBtn.style.backgroundColor = corFundo;
+            document.body.style.backgroundColor = corFundo;
+            operadoraSelecionada = operadora.getAttribute("data-operadora");
+            playClickSound();
+        });
+    });
+
+    gerarCodigoBtn.addEventListener("click", function () {
+        if (operadoraSelecionada === null) {
+            codigoGerado.textContent = "Escolha a operadora";
+        } else {
+            const codigo = gerarCodigoUnico();
+            codigoGerado.textContent = "Código de Recarga: " + codigo;
+        }
+        playClickSound();
+    });
+
+    function gerarCodigoUnico() {
+        let codigo;
+        do {
+            codigo = gerarCodigo();
+        } while (codigoJaGerado(codigo));
+        return codigo;
+    }
+
+    function gerarCodigo() {
+        const prefixosPorOperadora = {
+            unitel: ["137", "815"],
+            africell: ["642", "396"],
+            bazza: ["364"],
+            movicel: ["839", "621"]
+        };
+
+        const prefixo = prefixosPorOperadora[operadoraSelecionada];
+        if (prefixo) {
+            const sequenciaNumerica = gerarSequenciaNumerica(10); // 10 dígitos numéricos
+            return prefixo[Math.floor(Math.random() * prefixo.length)] + sequenciaNumerica;
+        }
+    }
+
+    function gerarSequenciaNumerica(comprimento) {
+        let sequencia = "";
+        for (let i = 0; i < comprimento; i++) {
+            sequencia += Math.floor(Math.random() * 10);
+        }
+        return sequencia;
+    }
+
+    function codigoJaGerado(codigo) {
+        // Verifique se o código já foi gerado anteriormente
+        const codigosGerados = Array.from(document.querySelectorAll(".codigo-gerado"));
+        return codigosGerados.some(function (element) {
+            return element.textContent === codigo;
+        });
+    }
+
+    function playClickSound() {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+});
+
+    </script>
+</body>
+</html>
+
